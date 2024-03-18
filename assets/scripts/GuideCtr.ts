@@ -32,6 +32,7 @@ class GuideCtr{
         } catch (error) {
             console.error('没任务');
         }
+        this.currentTaskIndex = 0;
         this.executeCurrentTask();
     }
 
@@ -51,7 +52,6 @@ class GuideCtr{
             guideCommd.performTask(currentTask,this.ui);
         } else {
             console.log("所有任务已完成");
-            this.currentTaskIndex = 0;
             this.ui.close();
         }
     }
@@ -92,6 +92,7 @@ class GuideCtr{
 
     clickUi(type:string){
         // TODO 没想好怎么写判断结束
+        if( this.currentTaskIndex >= this.task.SubGuideList.length) return
         this.endTask()
     }
 

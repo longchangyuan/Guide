@@ -19,7 +19,8 @@ export interface SubGuideData {
     SubId: number;
     //子引导名字
     SubName: string;
-    
+    // 是否需要储存到后台
+    nendSave: boolean;
     // 是否需要mask 默认有 
     Mask: boolean;
     // 是否强制引导

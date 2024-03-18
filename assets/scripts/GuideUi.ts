@@ -87,7 +87,7 @@ export class GuideUi extends Component {
         guideCtr.clickUi(click)
     }
     close(){
-        this.node.destroy();
+        this.node.active  = false;
     }
 }
 
