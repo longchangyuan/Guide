@@ -1,0 +1,62 @@
+{
+    "GuideId": 101,
+    "GuideName": "测试101",
+    "SubGuideList": [
+        {
+            "SubId": 1,
+            "SubName": "测试10101",
+            "Mask":true,
+            "Actions": [
+                {
+                    "Type": "Dialog",
+                    "Params": {
+                        "Pos": [100,100,0],
+                        "Content": "第一个引导"
+                    }
+                },
+                {
+                    "Type": "ButtonClick",
+                    "Params": {
+                        "url": "main/Button_0"
+                    }
+                }
+            ],
+            "DoneConditions":["cliclDialog","cliclShow","Countdown"]
+
+        },
+        {
+            "SubId": 2,
+            "SubName": "测试10102",
+            "Mask":true,
+            "Actions": [
+                {
+                    "Type": "Dialog",
+                    "Params": {
+                        "Pos": [100,100,0],
+                        "Content": "第二个引导"
+                    }
+                },
+                {
+                    "Type": "ButtonClick",
+                    "Params": {
+                        "url": "main/Button_1"
+                    }
+                }
+            ],
+            "Done":{
+                "time":3, 
+                "actions":[
+                    {
+                        "Type": "Dialog",
+                        "Params": {
+                            "Pos": [100,100,0],
+                            "Content": "引导结束",
+                            "time":3
+                        }
+                    }
+                ]
+            }
+           
+        }
+    ]
+}

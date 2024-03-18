@@ -1,0 +1,84 @@
+{
+    "GuideId": 102,
+    "GuideName": "出来咋到",
+    "PreId": -1,
+    "PostId": 102,
+    "Priority": 0,
+    "ForceGuide": 1,
+    "SubGuideList": [
+        {
+            "SubId": 101,
+            "SubName": "初来咋到-说明文字1",
+            "Triggers": [
+                {
+                    "Type": "EnterScene",
+                    "Params": {
+                        "SceneName": "MainScene"
+                    }
+                }
+            ],
+            "Conditions": [
+                {
+                    "Type": "PanelVisible",
+                    "Params": {
+                        "UIName": "HallPanel"
+                    }
+                },
+                {
+                    "Type": "PlayerLevel",
+                    "Params": {
+                        "Value": 1
+                    }
+                }
+            ],
+            "Actions": [
+                {
+                    "Type": "Dialog",
+                    "Params": {
+                        "DialogType": "Left",
+                        "Content": "欢迎{PlayerName}来到{BornName}",
+                        "ShowIntervalTime": 0.05
+                    }
+                }
+            ],
+            "Dones": [
+                {
+                    "Type": "ButtonClick",
+                    "Params": {
+                        "UIName": "GuidePanel",
+                        "ButtonName": "dialog"
+                    }
+                }
+            ]
+        },
+        {
+            "SubId": 102,
+            "SubName": "初来咋到-点击背包",
+            "Triggers": [
+                {
+                    "Type": "Sequence"
+                }
+            ],
+            "Actions": [
+                {
+                    "Type": "ShowButtonAnim",
+                    "Params": {
+                        "UIName": "HallPanel",
+                        "ButtonName": "BtnBag"
+                    }
+                }
+            ],
+            "Dones": [
+                {
+                    "Type": "ButtonClick",
+                    "Params": {
+                        "UIName": "HallPanel",
+                        "ButtonName": "BtnBag"
+                    }
+                }
+            ]
+        }
+    ]
+}
+
+
