@@ -1,8 +1,8 @@
-import { error } from "cc";
+import { error, sys } from "cc";
 import { MainGuideData, SubGuideData, guideData } from "./GuideData";
 import { GuideUi } from "./GuideUi";
 import { guideCommd } from "./GuideCommd";
-class GuideCtr{
+class GuideCtr {
 
     currentTaskIndex: number = 0;
     /**
@@ -13,7 +13,7 @@ class GuideCtr{
      * 当前子任务
      *  */
     subTask: SubGuideData;
-        /**
+    /**
      * 当前任务id
      *  */
     _taskId: number;
@@ -25,7 +25,7 @@ class GuideCtr{
         this._taskId = taskId;
 
     }
-    startTask(id:number,ui:GuideUi){
+    startTask(id: number, ui: GuideUi) {
         this.ui = ui;
         try {
             this.loadTask(id);
@@ -37,41 +37,42 @@ class GuideCtr{
     }
 
     // 获取对应任务
-    loadTask(id: number){
+    loadTask(id: number) {
         this.taskId = id;
         this.task = guideData.getTaskById(this.taskId);
         if (!this.task) return error
     }
 
-    /**执行当前任务*/ 
+    /**执行当前任务*/
     executeCurrentTask() {
         if (this.currentTaskIndex >= 0 && this.currentTaskIndex < this.task.SubGuideList.length) {
             const currentTask = this.task.SubGuideList[this.currentTaskIndex];
             this.subTask = currentTask;
             console.log(`执行任务: ${currentTask.SubName}`);
-            guideCommd.performTask(currentTask,this.ui);
+            guideCommd.performTask(currentTask, this.ui);
         } else {
             console.log("所有任务已完成");
             this.ui.close();
         }
     }
-    /**任务结束*/ 
+    /**任务结束*/
     endTask() {
         if (this.subTask.Done) {
             console.log("结束动画");
             guideCommd.runActions(this.subTask.Done.actions);
-            setTimeout(()=>{
-                this.ui.restore();
+            setTimeout(() => {
                 this.nextTask();
-            },this.subTask.Done.time*1000)
-        }else{
-            this.ui.restore();
+            }, this.subTask.Done.time * 1000)
+        } else {
             this.nextTask();
         }
-        
     }
     // 切换到下一个任务
     nextTask() {
+        if (this.subTask.nendSave) {
+            this.saveCurrentTask();
+        }
+        this.ui.restore();
         this.currentTaskIndex++;
         this.executeCurrentTask();
     }
@@ -90,10 +91,21 @@ class GuideCtr{
         return true
     }
 
-    clickUi(type:string){
+    clickUi(type: string) {
         // TODO 没想好怎么写判断结束
-        if( this.currentTaskIndex >= this.task.SubGuideList.length) return
+        if (this.currentTaskIndex >= this.task.SubGuideList.length) return
         this.endTask()
+    }
+
+    // 存数据
+    // TODO 要存在后台 暂时存在本地
+    saveCurrentTask() {
+        // _taskId:this.currentTaskIndex
+        sys.localStorage.setItem(this._taskId, this.currentTaskIndex);
+    }
+    /**获取数据 */
+    getCurrentTask(id: number) {
+        return sys.localStorage.getItem(String(id));
     }
 
 
